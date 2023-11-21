@@ -159,16 +159,13 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
-    for i in range (len(t)):
-       if t[0] == 'berry':
-           return True
-       if len(t) == 1:
-           return False
-       find_left = berry_finder(t[i + 1])
-       find_right = berry_finder(t[i + 2])
-       if find_left or find_right:
-           return True
+    if label(t) == 'berry':
+        return True
+    for branch in branches(t):
+        if berry_finder(branch):
+            return True
     return False
+
 
 
 
@@ -206,6 +203,9 @@ def sprout_leaves(t, leaves):
           2
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return tree(label(t), [tree(node) for node in leaves])
+    return tree(label(t), [sprout_leaves(branch, leaves) for branch in branches(t)])
 
 # Abstraction tests for sprout_leaves and berry_finder
 def check_abstraction():
@@ -264,7 +264,7 @@ def coords(fn, seq, lower, upper):
     [[-2, 4], [1, 1], [3, 9]]
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return [[idx, fn(idx)] for idx in seq if (fn(idx) >= lower and fn(idx) <= upper)]
 
 
 def riffle(deck):
@@ -277,8 +277,12 @@ def riffle(deck):
     [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
     """
     "*** YOUR CODE HERE ***"
-    return _______
 
+    l = len(deck)
+    #return sum([[deck[i]] + [deck[l // 2 + i]] for i in range(l // 2)], [])   #每次算两个最后sum计算列表和
+
+    fn = lambda x: (x % 2) * l // 2 + x // 2         #(x % 2) * l // 2 判断从头算还是从中间算        
+    return [deck[fn(i)] for i in range(l)]
 
 def add_trees(t1, t2):
     """
@@ -315,8 +319,7 @@ def add_trees(t1, t2):
         5
       5
     """
-    "*** YOUR CODE HERE ***"
-
+    "*** YOUR CODE HERE ***
 
 def build_successors_table(tokens):
     """Return a dictionary: keys are words; values are lists of successors.
