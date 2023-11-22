@@ -335,6 +335,7 @@ def par2(r1, r2):
     rep_r1 = div_interval(one, r1)
     rep_r2 = div_interval(one, r2)
     return div_interval(one, add_interval(rep_r1, rep_r2))
+    
 def check_par():
     """Return two intervals that give different results for parallel resistors.
 
@@ -350,7 +351,21 @@ def check_par():
 
 
 def multiple_references_explanation():
-    return """The multiple reference problem..."""
+    return """The multiple reference problem exists.  The true value
+    within a particular interval is fixed (though unknown).  Nested
+    combinations that refer to the same interval twice may assume two different
+    true values for the same interval, which is an error that results in
+    intervals that are larger than they should be.
+
+    Consider the case of i * i, where i is an interval from -1 to 1.  No value
+    within this interval, when squared, will give a negative result.  However,
+    our mul_interval function will allow us to choose 1 from the first
+    reference to i and -1 from the second, giving an erroneous lower bound of
+    -1.
+
+    Hence, a program like par2 is better than par1 because it never combines
+    the same interval more than once.
+    """ 
 
 
 def quadratic(x, a, b, c):
@@ -363,8 +378,17 @@ def quadratic(x, a, b, c):
     '0 to 10'
     """
     "*** YOUR CODE HERE ***"
-    a_x = mul_interval(a, x)
+    u = -b / (2 * a)
+    l, r = lower_bound(x), upper_bound(x)
+    f = lambda x: a * x * x + b * x + c
+    l_value, r_value, u_value = f(l), f(r), f(u)
 
+    if l <= u <= r:
+        return interval(min(l_value, r_value, u_value), max(l_value, r_value, u_value))
+    if u < l:
+        return interval(l_value, r_value)
+    if u > r:
+        return interval(r_value, l_value)
 
 
 # Tree ADT
@@ -431,4 +455,6 @@ def copy_tree(t):
     5
     """
     return tree(label(t), [copy_tree(b) for b in branches(t)])
+
+    
 
