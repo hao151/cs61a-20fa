@@ -231,13 +231,16 @@ def remainders_generator(m):
     "*** YOUR CODE HERE ***"
 
     def generate(k):
-        tmp = filter(lambda x: x % m == k, naturals())
-        yield from tmp
+        #yield from [x for x in naturals() if x % m == k]   
+        #List comprehension是错误的，会首先计算for i in <state>:死循环
+
+        yield from filter(lambda x: x % m == k, naturals()) 
+        #而filter(条件筛选)/map(执行函数)/zip(返回pair)返回的是iterator，只有被用到的时候才会计算.不会死循环
 
         # for i in naturals():
         #     if i % m == k:
         #         yield i
-        
+
     for i in range(m):
         yield generate(i)
 
