@@ -144,7 +144,7 @@ def permutations(seq):
         
     for i in range(len(seq)):
         for ans in permutations(seq[:i] + seq[i + 1:]):
-            yield ans + [seq[i]]
+            yield [seq[i]] + ans
 
 def make_joint(withdraw, old_pass, new_pass):
     """Return a password-protected withdraw function that has joint access to
