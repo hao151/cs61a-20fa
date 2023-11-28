@@ -131,13 +131,10 @@ class Ant(Insect):
         Insect.add_to(self, place)
 
     def remove_from(self, place):
-
         if hasattr(self, "name") and self.name == "Queen" and self.is_true_queen:    
             return
-
             #08有一个测试点的对象直接用Ant()来生成的,没有name属性,会与EC问题冲突，
             #所以需要提前判断一下该对象是否具有name属性
-            
         if place.ant is self:
             place.ant = None
         elif place.ant is None:
