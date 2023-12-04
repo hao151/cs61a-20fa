@@ -126,7 +126,8 @@ def reverse_other(t):
     """
     "*** YOUR CODE HERE ***"
 
-    """   #另一种题意：以为是层次遍历。。逆序感觉写得不错发现理解错题意了.....
+    """
+    #另一种题意：以为是层次遍历。。逆序感觉写得不错发现理解错题意了.....
     depth = {t:0}
     q = Queue(maxsize=0)
     q.put(t)
@@ -146,7 +147,6 @@ def reverse_other(t):
             q.put(branch)
             if depth[branch] % 2 == 1:
                 branch.label = depth_and_order[depth[branch]].pop()
-                continue
     """
     def dfs(root, n):
         if not isinstance(root, Tree):
