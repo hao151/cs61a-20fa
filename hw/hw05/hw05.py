@@ -274,7 +274,7 @@ def path_yielder(t, value):
         backup = path[:]
         if len(path) and path[-1] == value:
             print("debug ", path)
-            yield path
+            yield path[:]
         if root != []:
             for branch in root.branches:
                 yield from dfs(branch, path)
