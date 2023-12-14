@@ -43,8 +43,8 @@ elif x > 5:
 ```
 使用```begin```的语句与上面等效：
 ```
-(cond (begin (> x 10) (print 'big'))
-      (else (beigin (> x 5) (print 'medium'))))
+(cond (begin (> x 10) (print 'big') print("hi"))
+      (else (beigin (> x 5) (print 'medium') print("hello"))))
 ```
 
 
@@ -57,6 +57,8 @@ elif x > 5:
 > (zero? (- 2 2))
 #t
 ```
+注意```(equal? <operand1> <operand2>)```、```(eq? <operand1> <operand2>)```和```(= <operand1> <operand2>)```不一样！！！
+```(= <operand1> <operand2>)```只能用于判断数字
 #### 逻辑运算
 逻辑与：```(and <e1> <e2> ...)```  逻辑或：```（or <e1> <e2> ...）```  逻辑非：```(not <e>)```
 
